@@ -9,7 +9,6 @@ namespace Nuton {
     private ToolStripMenuItem menuItemActions;
     private ToolStripMenuItem menuItemCalculate;
     private ToolStripMenuItem menuItemStepByStep;
-    private ToolStripMenuItem menuItemNextStep;
     private ToolStripMenuItem menuItemClear;
 
     private FlowLayoutPanel inputPanel;
@@ -22,6 +21,8 @@ namespace Nuton {
     private Label labelFormula;
     private TextBox textBoxFormula;
 
+    private Button buttonNextStep;
+    private Label resultLabel;
     private PictureBox chartPictureBox;
     private Label statusLabel;
 
@@ -37,7 +38,6 @@ namespace Nuton {
       this.menuItemActions = new ToolStripMenuItem();
       this.menuItemCalculate = new ToolStripMenuItem();
       this.menuItemStepByStep = new ToolStripMenuItem();
-      this.menuItemNextStep = new ToolStripMenuItem();
       this.menuItemClear = new ToolStripMenuItem();
 
       this.inputPanel = new FlowLayoutPanel();
@@ -50,6 +50,8 @@ namespace Nuton {
       this.labelFormula = new Label();
       this.textBoxFormula = new TextBox();
 
+      this.buttonNextStep = new Button();
+      this.resultLabel = new Label();
       this.chartPictureBox = new PictureBox();
       this.statusLabel = new Label();
 
@@ -72,15 +74,11 @@ namespace Nuton {
       this.menuItemStepByStep.Text = "Пошаговый режим";
       this.menuItemStepByStep.Click += new System.EventHandler(this.OnStepByStepClick);
 
-      this.menuItemNextStep.Text = "Следующий шаг";
-      this.menuItemNextStep.Click += new System.EventHandler(this.OnNextStepClick);
-
       this.menuItemClear.Text = "Очистить";
       this.menuItemClear.Click += new System.EventHandler(this.OnClearClick);
 
       this.menuItemActions.DropDownItems.Add(this.menuItemCalculate);
       this.menuItemActions.DropDownItems.Add(this.menuItemStepByStep);
-      this.menuItemActions.DropDownItems.Add(this.menuItemNextStep);
       this.menuItemActions.DropDownItems.Add(this.menuItemClear);
       this.menuStrip.Items.Add(this.menuItemActions);
 
@@ -130,6 +128,17 @@ namespace Nuton {
       this.textBoxFormula.Width = formulaTextBoxWidth;
       this.textBoxFormula.Font = new Font("Segoe UI", fontSize);
 
+      // buttonNextStep
+      this.buttonNextStep.Text = "Следующий шаг >>";
+      this.buttonNextStep.Width = nextStepButtonWidth;
+      this.buttonNextStep.Height = nextStepButtonHeight;
+      this.buttonNextStep.BackColor = Color.DarkOrange;
+      this.buttonNextStep.ForeColor = Color.White;
+      this.buttonNextStep.Font = new Font("Segoe UI", fontSize, FontStyle.Bold);
+      this.buttonNextStep.Margin = new Padding(paddingSmall * 4, 0, 0, 0);
+      this.buttonNextStep.Enabled = false;
+      this.buttonNextStep.Click += new System.EventHandler(this.OnNextStepClick);
+
       this.inputPanel.Controls.Add(this.labelA);
       this.inputPanel.Controls.Add(this.textBoxA);
       this.inputPanel.Controls.Add(this.labelB);
@@ -138,6 +147,16 @@ namespace Nuton {
       this.inputPanel.Controls.Add(this.textBoxEpsilon);
       this.inputPanel.Controls.Add(this.labelFormula);
       this.inputPanel.Controls.Add(this.textBoxFormula);
+      this.inputPanel.Controls.Add(this.buttonNextStep);
+
+      // resultLabel
+      this.resultLabel.Dock = DockStyle.Top;
+      this.resultLabel.Height = resultLabelHeight;
+      this.resultLabel.TextAlign = ContentAlignment.MiddleLeft;
+      this.resultLabel.ForeColor = Color.LimeGreen;
+      this.resultLabel.Font = new Font("Segoe UI", 12f, FontStyle.Bold);
+      this.resultLabel.Text = "Ответ: ";
+      this.resultLabel.Padding = new Padding(paddingSmall, 0, 0, 0);
 
       // chartPictureBox
       this.chartPictureBox.Dock = DockStyle.Fill;
@@ -163,6 +182,7 @@ namespace Nuton {
 
       this.Controls.Add(this.chartPictureBox);
       this.Controls.Add(this.statusLabel);
+      this.Controls.Add(this.resultLabel);
       this.Controls.Add(this.inputPanel);
       this.Controls.Add(this.menuStrip);
 
